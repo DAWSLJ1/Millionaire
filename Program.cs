@@ -40,22 +40,20 @@ namespace MillionaireAssignment
             {
                 Console.Clear();
 
-                // Draw banner
                 Console.ForegroundColor = (ConsoleColor)rng.Next(1, 16);
                 Console.WriteLine(asciiArt);
 
                 Console.ResetColor();
 
-                // Draw menu underneath
                 Console.WriteLine();
                 Console.WriteLine("1. View Player List");
                 Console.WriteLine("2. Change Player Interest");
-                Console.WriteLine("3. Play Game");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("3. View top 10 Contestants");
+                Console.WriteLine("4. Play Game");
+                Console.WriteLine("5. Exit");
                 Console.WriteLine();
                 Console.Write("Choice: ");
 
-                // Wait a short time to animate
                 DateTime endTime = DateTime.Now.AddMilliseconds(1000);
 
                 while (DateTime.Now < endTime)
@@ -80,9 +78,14 @@ namespace MillionaireAssignment
                                 Console.Clear();
                                 Top10();
                                 break;
-
                             case '4':
-                                return;
+                                Console.Clear();
+                                Game();
+                                break;
+
+                            case '5':
+                                Environment.Exit(0);
+                                break;
                         }
                     }
 
@@ -90,7 +93,10 @@ namespace MillionaireAssignment
                 }
             }
         }
+        public static void Quit()
+        {
 
+        }
 
 
         public static void Top10()
@@ -133,10 +139,10 @@ namespace MillionaireAssignment
             studentfile(students);
             Sort(students);
             Displayfile(students);
-            Console.WriteLine() ;
+            Console.WriteLine();
             Console.WriteLine("Press Enter to Exit");
             Console.ReadLine();
-            Console.Clear() ;
+            Console.Clear();
             Console.Write("\x1b[3Jm");
             Console.Clear();
             Main();
@@ -145,12 +151,12 @@ namespace MillionaireAssignment
         {
             Players[] students = new Players[35];
             Alter(students);
-            
+
         }
         static void Alter(Players[] students)
         {
             bool play = true;
-            
+
             studentfile(students);
             bool found = false;
             Console.WriteLine("Which player would you like to change?");
@@ -175,7 +181,7 @@ namespace MillionaireAssignment
                 Clear();
                 Displayfile(students);
                 Console.ReadLine();
-                SaveFile(students); 
+                SaveFile(students);
                 Console.WriteLine();
                 Console.Clear();
                 Main();
@@ -213,7 +219,7 @@ namespace MillionaireAssignment
         }
         public static void Displayfile(Players[] students)
         {
-            Console.WriteLine($"{"First Name",-14} | {"lastName",-14} | {"interest",-14}");
+            Console.WriteLine($"{"First Name",-14} | {"LastName",-14} | {"Interest",-14}");
             for (int i = 0; i < students.Length; i++)
             {
                 Console.WriteLine($"{students[i].firstName,-14} | {students[i].lastName,-14} | {students[i].interest,-14}");
@@ -222,7 +228,7 @@ namespace MillionaireAssignment
         static void SaveFile(Players[] students)
         {
             StreamWriter sw = new StreamWriter(@"Millionaire.txt");
-            Console.WriteLine($"{"First Name",-14} | {"lastName",-14} | {"interest",-14}");
+            Console.WriteLine($"{"First Name",-14} | {"LastName",-14} | {"Interest",-14}");
             foreach (Players stu in students)
             {
                 sw.WriteLine(stu.firstName);
@@ -230,6 +236,16 @@ namespace MillionaireAssignment
                 sw.WriteLine(stu.interest);
             }
             sw.Close();
+        }
+            public static void Game()
+        {
+            int question = 1;
+            Console.WriteLine($"\tQuestion {question}");
+            Console.WriteLine();
+        }
+        public static void Questions()
+        {
+
         }
     }
 }
