@@ -9,14 +9,91 @@
 
 
         }
-        static void Main(string[] args)
+        static void Main()
+        {
+            
+            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine("-----     WHO WANTS TO BE A MILLIONAIRE      -----");
+            Console.WriteLine("--------------------------------------------------");
+            Console.WriteLine();
+            Console.WriteLine("1. View Player List");
+            Console.WriteLine("2. Change Player Interest");
+            Console.WriteLine("3. Play Game");
+            Console.WriteLine("4. Exit");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    Console.Clear();
+                    PlayerMenu();
+                    break;
+                    case 2:
+                    Console.Clear();
+                    Change();
+                    break;
+                    case 3:
+
+                    break;
+                    case 4:
+
+                    break;
+                default:
+                    Console.WriteLine("Invalid Option");
+                    Thread.Sleep(500);
+                    Console.Clear();
+                    Main();
+                    break;
+            }
+            
+
+        }
+        public static void PlayerMenu()
         {
             Players[] students = new Players[35];
             studentfile(students);
             Sort(students);
             Displayfile(students);
-            SaveFile(students);
-
+            Console.WriteLine() ;
+            Console.WriteLine("Press Enter to Exit");
+            Console.ReadLine();
+            Console.Clear() ;
+            Main();
+        }
+        public static void Change()
+        {
+            Players[] students = new Players[35];
+            Alter(students);
+            
+        }
+        static void Alter(Players[] students)
+        {
+            bool play = true;
+            Players[] icecream = new Players[22];
+            studentfile(students);
+            bool found = false;
+            Console.WriteLine("Which player would you like to change?");
+            string wanted = Console.ReadLine();
+            while (play)
+            {
+                for (int i = 0; i < students.Length; i++)
+                {
+                    if (students[i].Last_Name == wanted)
+                    {
+                        found = true;
+                        Console.WriteLine("What would you like to change it to?");
+                        string alt = Console.ReadLine();
+                        students[i].Interest = (alt);
+                    }
+                }
+                if (found == false)
+                {
+                    Console.WriteLine("Not found");
+                    Console.ReadLine();
+                }
+                SaveFile(students);
+                Console.Clear();
+                Main();
+            }
         }
         static void studentfile(Players[] students)
         {
@@ -30,7 +107,6 @@
                 students[index].Interest = sr.ReadLine().Trim();
                 index++;
             }
-            Console.ReadLine();
         }
         static void Sort(Players[] numbers)
         {
@@ -48,14 +124,13 @@
                 }
             }
         }
-        static void Displayfile(Players[] students)
+        public static void Displayfile(Players[] students)
         {
             Console.WriteLine($"{"First Name",-14} | {"Last_Name",-14} | {"Interest",-14}");
             foreach (Players stu in students)
             {
                 Console.WriteLine($"{stu.First_Name,-14} | {stu.Last_Name,-14} | {stu.Interest,-14}");
             }
-            Console.ReadLine();
         }
         static void SaveFile(Players[] students)
         {
