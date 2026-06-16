@@ -1,10 +1,12 @@
-﻿namespace MillionaireAssignment
+﻿using static System.Console;
+
+namespace MillionaireAssignment
 {
     internal class Program
     {
         public struct Players()
         {
-            public string Last_Name, First_Name, Interest;
+            public string lastName, firstName, interest;
             public int team;
 
 
@@ -17,7 +19,7 @@
             Console.WriteLine("--------------------------------------------------");
             Console.WriteLine();
             Console.WriteLine("1. View Player List");
-            Console.WriteLine("2. Change Player Interest");
+            Console.WriteLine("2. Change Player interest");
             Console.WriteLine("3. Play Game");
             Console.WriteLine("4. Exit");
             int choice = Convert.ToInt32(Console.ReadLine());
@@ -57,6 +59,8 @@
             Console.WriteLine("Press Enter to Exit");
             Console.ReadLine();
             Console.Clear() ;
+            Console.Write("\x1b[3Jm");
+            Console.Clear();
             Main();
         }
         public static void Change()
@@ -68,7 +72,7 @@
         static void Alter(Players[] students)
         {
             bool play = true;
-            Players[] icecream = new Players[22];
+            
             studentfile(students);
             bool found = false;
             Console.WriteLine("Which player would you like to change?");
@@ -77,12 +81,12 @@
             {
                 for (int i = 0; i < students.Length; i++)
                 {
-                    if (students[i].Last_Name == wanted)
+                    if (students[i].lastName == wanted)
                     {
                         found = true;
                         Console.WriteLine("What would you like to change it to?");
                         string alt = Console.ReadLine();
-                        students[i].Interest = (alt);
+                        students[i].interest = (alt);
                     }
                 }
                 if (found == false)
@@ -90,7 +94,11 @@
                     Console.WriteLine("Not found");
                     Console.ReadLine();
                 }
-                SaveFile(students);
+                Clear();
+                Displayfile(students);
+                Console.ReadLine();
+                SaveFile(students); 
+                Console.WriteLine();
                 Console.Clear();
                 Main();
             }
@@ -102,11 +110,12 @@
             Random rand = new Random();
             while (!sr.EndOfStream)
             {
-                students[index].First_Name = sr.ReadLine().Trim();
-                students[index].Last_Name = sr.ReadLine().Trim();
-                students[index].Interest = sr.ReadLine().Trim();
+                students[index].firstName = sr.ReadLine().Trim();
+                students[index].lastName = sr.ReadLine().Trim();
+                students[index].interest = sr.ReadLine().Trim();
                 index++;
             }
+            sr.Close();
         }
         static void Sort(Players[] numbers)
         {
@@ -115,7 +124,7 @@
             {
                 for (int pos = 0; pos < numbers.Length - 1; pos++)
                 {
-                    if (numbers[pos + 1].Last_Name.CompareTo(numbers[pos].Last_Name) == -1)
+                    if (numbers[pos + 1].lastName.CompareTo(numbers[pos].lastName) == -1)
                     {
                         temp = numbers[pos + 1];
                         numbers[pos + 1] = numbers[pos];
@@ -126,19 +135,21 @@
         }
         public static void Displayfile(Players[] students)
         {
-            Console.WriteLine($"{"First Name",-14} | {"Last_Name",-14} | {"Interest",-14}");
-            foreach (Players stu in students)
+            Console.WriteLine($"{"First Name",-14} | {"lastName",-14} | {"interest",-14}");
+            for (int i = 0; i < students.Length; i++)
             {
-                Console.WriteLine($"{stu.First_Name,-14} | {stu.Last_Name,-14} | {stu.Interest,-14}");
+                Console.WriteLine($"{students[i].firstName,-14} | {students[i].lastName,-14} | {students[i].interest,-14}");
             }
         }
         static void SaveFile(Players[] students)
         {
-            StreamWriter sw = new StreamWriter(@"NewMillionaire.txt");
-            Console.WriteLine($"{"First Name",-14} | {"Last_Name",-14} | {"Interest",-14}");
+            StreamWriter sw = new StreamWriter(@"Millionaire.txt");
+            Console.WriteLine($"{"First Name",-14} | {"lastName",-14} | {"interest",-14}");
             foreach (Players stu in students)
             {
-                sw.WriteLine($"{stu.First_Name,-14} | {stu.Last_Name,-14} | {stu.Interest,-14}");
+                sw.WriteLine(stu.firstName);
+                sw.WriteLine(stu.lastName);
+                sw.WriteLine(stu.interest);
             }
             sw.Close();
         }
