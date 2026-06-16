@@ -13,10 +13,31 @@ namespace MillionaireAssignment
         }
         static void Main()
         {
-            
-            Console.WriteLine("--------------------------------------------------");
-            Console.WriteLine("-----     WHO WANTS TO BE A MILLIONAIRE      -----");
-            Console.WriteLine("--------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Blue;
+                string asciiArt = @"
+ _    _ _                                 _           _          _
+| |  | | |                               | |         | |        | |
+| |  | | |__   ___   __      ____ _ _ __ | |_   ___  | |_ ___   | |__   ___
+| |/\| | '_ \ / _ \  \ \ /\ / / _` | '_ \| __| / __| | __/ _ \  | '_ \ / _ \
+\  /\  / | | | (_) |  \ V  V / (_| | | | | |_  \__ \ | || (_) | | |_) |  __/
+ \/  \/|_| |_|\___/    \_/\_/ \__,_|_| |_|\__| |___/  \__\___/  |_.__/ \___|
+
+
+                    _ _ _ _                   _
+                   (_) | (_)                 (_)
+  __ _    _ __ ___  _| | |_  ___  _ __   __ _ _ _ __ ___
+ / _` |  | '_ ` _ \| | | | |/ _ \| '_ \ / _` | | '__/ _ \
+| (_| |  | | | | | | | | | | (_) | | | | (_| | | | |  __/
+ \__,_|  |_| |_| |_|_|_|_|_|\___/|_| |_|\__,_|_|_|  \___|
+";
+
+                Console.WriteLine(asciiArt);
+            Console.ForegroundColor= ConsoleColor.White;
+        
+        Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("-------------------------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             Console.WriteLine("1. View Player List");
             Console.WriteLine("2. Change Player interest");
@@ -34,7 +55,8 @@ namespace MillionaireAssignment
                     Change();
                     break;
                     case 3:
-
+                    Clear();
+                    Top10();
                     break;
                     case 4:
 
@@ -48,6 +70,40 @@ namespace MillionaireAssignment
             }
             
 
+        }
+        public static void Top10()
+        {
+            int[] lotto = new int[10];
+            Random rand = new Random();
+
+            for (int i = 0; i < lotto.Length; i++)
+            {
+                int tempInt;
+                bool isdup = true;
+                while (isdup)
+                {
+                    tempInt = rand.Next(1, 36);
+                    isdup = false;
+                    for (int j = 0; j < i; j++)
+                    {
+                        if (lotto[j] == tempInt)
+                        {
+                            isdup = true;
+                        }
+
+                    }
+                    if (!isdup)
+                    {
+                        lotto[i] = tempInt;
+                    }
+
+                }
+            }
+            Array.Sort(lotto);
+            Console.WriteLine(string.Join(", ", lotto));
+            Console.ReadLine();
+            Clear();
+            Main();
         }
         public static void PlayerMenu()
         {
