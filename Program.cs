@@ -1,4 +1,8 @@
-﻿using static System.Console;
+﻿using System.Reflection;
+using System.Threading;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using static System.Console;
 
 namespace MillionaireAssignment
 {
@@ -13,8 +17,7 @@ namespace MillionaireAssignment
         }
         static void Main()
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-                string asciiArt = @"
+            string asciiArt = @"
  _    _ _                                 _           _          _
 | |  | | |                               | |         | |        | |
 | |  | | |__   ___   __      ____ _ _ __ | |_   ___  | |_ ___   | |__   ___
@@ -31,46 +34,65 @@ namespace MillionaireAssignment
  \__,_|  |_| |_| |_|_|_|_|_|\___/|_| |_|\__,_|_|_|  \___|
 ";
 
-                Console.WriteLine(asciiArt);
-            Console.ForegroundColor= ConsoleColor.White;
-        
-        Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("-------------------------------------------------------------------------------");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine();
-            Console.WriteLine("1. View Player List");
-            Console.WriteLine("2. Change Player interest");
-            Console.WriteLine("3. Play Game");
-            Console.WriteLine("4. Exit");
-            int choice = Convert.ToInt32(Console.ReadLine());
-            switch (choice)
+            Random rng = new Random();
+
+            while (true)
             {
-                case 1:
-                    Console.Clear();
-                    PlayerMenu();
-                    break;
-                    case 2:
-                    Console.Clear();
-                    Change();
-                    break;
-                    case 3:
-                    Clear();
-                    Top10();
-                    break;
-                    case 4:
+                Console.Clear();
 
-                    break;
-                default:
-                    Console.WriteLine("Invalid Option");
-                    Thread.Sleep(500);
-                    Console.Clear();
-                    Main();
-                    break;
+                // Draw banner
+                Console.ForegroundColor = (ConsoleColor)rng.Next(1, 16);
+                Console.WriteLine(asciiArt);
+
+                Console.ResetColor();
+
+                // Draw menu underneath
+                Console.WriteLine();
+                Console.WriteLine("1. View Player List");
+                Console.WriteLine("2. Change Player Interest");
+                Console.WriteLine("3. Play Game");
+                Console.WriteLine("4. Exit");
+                Console.WriteLine();
+                Console.Write("Choice: ");
+
+                // Wait a short time to animate
+                DateTime endTime = DateTime.Now.AddMilliseconds(1000);
+
+                while (DateTime.Now < endTime)
+                {
+                    if (Console.KeyAvailable)
+                    {
+                        ConsoleKeyInfo key = Console.ReadKey(true);
+
+                        switch (key.KeyChar)
+                        {
+                            case '1':
+                                Console.Clear();
+                                PlayerMenu();
+                                break;
+
+                            case '2':
+                                Console.Clear();
+                                Change();
+                                break;
+
+                            case '3':
+                                Console.Clear();
+                                Top10();
+                                break;
+
+                            case '4':
+                                return;
+                        }
+                    }
+
+                    Thread.Sleep(10);
+                }
             }
-            
-
         }
+
+
+
         public static void Top10()
         {
             int[] lotto = new int[10];
