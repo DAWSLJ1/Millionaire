@@ -67,7 +67,7 @@ namespace MillionaireAssignment
                 Console.WriteLine();
                 Console.WriteLine("1. View Player List");
                 Console.WriteLine("2. Change Player Interest");
-                Console.WriteLine("3. View top 10 Contestants");
+                Console.WriteLine("3. View top 10 Finalists");
                 Console.WriteLine("4. Play Game");
                 Console.WriteLine("5. Exit");
                 Console.WriteLine();
