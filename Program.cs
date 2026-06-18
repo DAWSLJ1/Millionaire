@@ -1,13 +1,16 @@
-﻿using System.Reflection;
-using System.Threading;
+﻿using Microsoft.VisualBasic;
 using System;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using static System.Console;
 
 namespace MillionaireAssignment
 {
     internal class Program
     {
+       public static Players[] students = new Players[35];
+       public static Players[] finalist = new Players[10];
         public struct Players()
         {
             public string lastName, firstName, interest;
@@ -17,6 +20,7 @@ namespace MillionaireAssignment
         }
         static void Main()
         {
+            studentfile();
             string asciiArt = @"
  _    _ _                                 _           _          _
 | |  | | |                               | |         | |        | |
@@ -93,42 +97,42 @@ namespace MillionaireAssignment
                 }
             }
         }
-        public static void Quit()
-        {
-
-        }
 
 
         public static void Top10()
         {
-            int[] lotto = new int[10];
+
+            
+            List<int> Pastplayers = new List<int>();
             Random rand = new Random();
 
-            for (int i = 0; i < lotto.Length; i++)
+            for (int i = 0; i < finalist.Length; i++)
             {
-                int tempInt;
-                bool isdup = true;
-                while (isdup)
+                int tempInt = 0;
+                bool newrand = true;
+                while (newrand)
                 {
                     tempInt = rand.Next(1, 36);
-                    isdup = false;
+                    newrand = false;
                     for (int j = 0; j < i; j++)
                     {
-                        if (lotto[j] == tempInt)
+                        if (Pastplayers[j] == tempInt)
                         {
-                            isdup = true;
+                            newrand = true;
                         }
 
                     }
-                    if (!isdup)
-                    {
-                        lotto[i] = tempInt;
-                    }
 
                 }
+                Pastplayers.Add(tempInt);
+                finalist[i] = students[tempInt];
             }
-            Array.Sort(lotto);
-            Console.WriteLine(string.Join(", ", lotto));
+            for (int i = 0; i < finalist.Length; i++)
+            {
+                
+                    Console.WriteLine(finalist[i].firstName + " " + finalist[i].lastName);
+                
+            }
             Console.ReadLine();
             Clear();
             Main();
@@ -136,9 +140,9 @@ namespace MillionaireAssignment
         public static void PlayerMenu()
         {
             Players[] students = new Players[35];
-            studentfile(students);
-            Sort(students);
-            Displayfile(students);
+            studentfile();
+           Sort();
+            Displayfile();
             Console.WriteLine();
             Console.WriteLine("Press Enter to Exit");
             Console.ReadLine();
@@ -149,17 +153,16 @@ namespace MillionaireAssignment
         }
         public static void Change()
         {
-            Players[] students = new Players[35];
-            Alter(students);
+            Alter();
 
         }
-        static void Alter(Players[] students)
+        static void Alter()
         {
             bool play = true;
 
-            studentfile(students);
+            studentfile();
             bool found = false;
-            Console.WriteLine("Which player would you like to change?");
+            Console.WriteLine("Which player would you like to change? (Via Last Name)");
             string wanted = Console.ReadLine();
             while (play)
             {
@@ -179,7 +182,8 @@ namespace MillionaireAssignment
                     Console.ReadLine();
                 }
                 Clear();
-                Displayfile(students);
+                Sort();
+                Displayfile();
                 Console.ReadLine();
                 SaveFile(students);
                 Console.WriteLine();
@@ -187,7 +191,7 @@ namespace MillionaireAssignment
                 Main();
             }
         }
-        static void studentfile(Players[] students)
+        static void studentfile()
         {
             StreamReader sr = new StreamReader(@"Millionaire.txt");
             int index = 0;
@@ -201,23 +205,15 @@ namespace MillionaireAssignment
             }
             sr.Close();
         }
-        static void Sort(Players[] numbers)
+        static void Sort()
         {
-            Players temp;
-            for (int i = 0; i < numbers.Length - 1; i++)
-            {
-                for (int pos = 0; pos < numbers.Length - 1; pos++)
-                {
-                    if (numbers[pos + 1].lastName.CompareTo(numbers[pos].lastName) == -1)
-                    {
-                        temp = numbers[pos + 1];
-                        numbers[pos + 1] = numbers[pos];
-                        numbers[pos] = temp;
-                    }
-                }
-            }
+
+            Array.Sort(students, (x, y) => y.lastName.CompareTo(x.lastName));
+            Array.Reverse(students);
+
+
         }
-        public static void Displayfile(Players[] students)
+        public static void Displayfile()
         {
             Console.WriteLine($"{"First Name",-14} | {"LastName",-14} | {"Interest",-14}");
             for (int i = 0; i < students.Length; i++)
@@ -239,6 +235,8 @@ namespace MillionaireAssignment
         }
             public static void Game()
         {
+            Random random = new Random();
+
             int question = 1;
             Console.WriteLine($"\tQuestion {question}");
             Console.WriteLine();
