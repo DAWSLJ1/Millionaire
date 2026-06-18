@@ -70,8 +70,6 @@ namespace MillionaireAssignment
                 Console.WriteLine("3. View top 10 Finalists");
                 Console.WriteLine("4. Play Game");
                 Console.WriteLine("5. Exit");
-                Console.WriteLine();
-                Console.Write("Choice: ");
 
                 DateTime endTime = DateTime.Now.AddMilliseconds(1000);
 
@@ -337,7 +335,7 @@ namespace MillionaireAssignment
             Console.WriteLine(selectedQuestion.optionC);
             Console.WriteLine(selectedQuestion.optionD);
             Console.WriteLine();
-            Console.Write("Final Answer (A, B, C, D): ");
+            Console.Write("Input (A, B, C, D): ");
 
             char userAnswer = Char.ToUpper(Console.ReadKey().KeyChar);
 
