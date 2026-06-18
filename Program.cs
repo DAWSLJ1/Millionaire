@@ -12,6 +12,8 @@ namespace MillionaireAssignment
         public static Random rand = new Random();
         public static Players[] students = new Players[35];
         public static Players[] finalist = new Players[10];
+       public static int question = 1, correct = 0;
+        public static bool win = false;
 
         public struct Question
         {
@@ -247,8 +249,9 @@ namespace MillionaireAssignment
         }
         public static void Game()
         {
-            Random rand = new Random();
-            int question = 1;
+            
+            
+            
 
             Console.WriteLine($"\tQuestion {question}");
             Console.WriteLine();
@@ -264,40 +267,40 @@ namespace MillionaireAssignment
         new Question
         {
             questionText = "What is the capital of New Zealand?",
-            optionA = "Auckland",
-            optionB = "Christchurch",
-            optionC = "Wellington",
-            optionD = "Hamilton",
+            optionA = "A) Auckland",
+            optionB = "B) Christchurch",
+            optionC = "C) Wellington",
+            optionD = "D) Hamilton",
             correctAnswer = 'C'
         },
 
         new Question
         {
             questionText = "How many continents are there?",
-            optionA = "5",
-            optionB = "6",
-            optionC = "7",
-            optionD = "8",
+            optionA = "A) 5",
+            optionB = "B) 6",
+            optionC = "C) 7",
+            optionD = "D) 8",
             correctAnswer = 'C'
         },
 
         new Question
         {
             questionText = "Who wrote Romeo and Juliet?",
-            optionA = "Charles Dickens",
-            optionB = "William Shakespeare",
-            optionC = "Mark Twain",
-            optionD = "Jane Austen",
+            optionA = "A) Charles Dickens",
+            optionB = "B) William Shakespeare",
+            optionC = "C) Mark Twain",
+            optionD = "D) Jane Austen",
             correctAnswer = 'B'
         },
 
         new Question
         {
             questionText = "What is 5 x 6?",
-            optionA = "25",
-            optionB = "30",
-            optionC = "35",
-            optionD = "40",
+            optionA = "A) 25",
+            optionB = "B) 30",
+            optionC = "C) 35",
+            optionD = "D) 40",
             correctAnswer = 'B'
         }
     };
@@ -325,15 +328,118 @@ namespace MillionaireAssignment
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine();
                 Console.WriteLine("Correct! You've won money!");
+                question++;
+                correct++;
+                Console.ResetColor();
+                Console.WriteLine();
+                money();
+                Console.ReadLine();
+                Console.ResetColor();
+                if (correct >= 5)
+                {
+                    question = 0;
+                    correct = 0;
+                    Win();
+                }
+                if (correct <= 5)
+                { 
+                    Clear();
+                    Game();
+                }
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"\tIncorrect!");
                 Console.WriteLine($"The correct answer was {selectedQuestion.correctAnswer}.");
+                Console.ResetColor ();
+                Console.ReadLine();
+                question++;
+                question = 1;
+                correct = 0;
+                Main();
             }
 
             Console.ResetColor();
+        }
+        public static void money()
+        {
+            if (correct == 1)
+            {
+                Console.WriteLine("Winnings");
+                Console.WriteLine("");
+                Console.WriteLine("1,000,000");
+                Console.WriteLine("100,000");
+                Console.WriteLine("1,000");
+                Console.WriteLine("100");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("1");
+                Console.ResetColor();
+            }
+            if (correct == 2)
+            {
+                Console.WriteLine("Winnings");
+                Console.WriteLine("");
+                Console.WriteLine("1,000,000");
+                Console.WriteLine("100,000");
+                Console.WriteLine("1,000");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("100");
+                Console.WriteLine("1");
+                Console.ResetColor();
+            }
+            if (correct == 3)
+            {
+                Console.WriteLine("Winnings");
+                Console.WriteLine("");
+                Console.WriteLine("1,000,000");
+                Console.WriteLine("100,000");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("1,000");
+                Console.WriteLine("100");
+                Console.WriteLine("1");
+                Console.ResetColor();
+            }
+            if (correct == 4)
+            {
+                Console.WriteLine("Winnings");
+                Console.WriteLine("");
+                Console.WriteLine("1,000,000");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("100,000");
+                Console.WriteLine("1,000");
+                Console.WriteLine("100");
+                Console.WriteLine("1");
+                Console.ResetColor();
+            }
+            if (correct == 5)
+            {
+                Console.WriteLine("Winnings");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("1,000,000");
+                Console.WriteLine("100,000");
+                Console.WriteLine("1,000");
+                Console.WriteLine("100");
+                Console.WriteLine("1");
+                Console.ResetColor();
+                win = true;
+            }
+        }
+        public static void Win()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine(@"/================================================\");
+            Console.WriteLine(@"||__   __           __        ___         _   _ ||");
+            Console.WriteLine(@"||\ \ / /__  _   _  \ \      / (_)_ __   | | | |||");
+            Console.WriteLine(@"|| \ V / _ \| | | |  \ \ /\ / /| | '_ \  | | | |||");
+            Console.WriteLine(@"||  | | (_) | |_| |   \ V  V / | | | | | |_| |_|||");
+            Console.WriteLine(@"||  |_|\___/ \__,_|    \_/\_/  |_|_| |_| (_) (_)||");
+            Console.WriteLine(@"||                                              ||");
+            Console.WriteLine(@"\================================================/");
+            Console.ReadLine();
+            Main();
         }
     }
 }
