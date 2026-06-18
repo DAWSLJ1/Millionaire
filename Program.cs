@@ -10,10 +10,12 @@ namespace MillionaireAssignment
     internal class Program
     {
         public static Random rand = new Random();
+        public static int previousQuestionIndex = -1;
         public static Players[] students = new Players[35];
         public static Players[] finalist = new Players[10];
        public static int question = 1, correct = 0;
         public static bool win = false;
+        public static List<int> usedQuestions = new List<int>();
 
         public struct Question
         {
@@ -249,10 +251,6 @@ namespace MillionaireAssignment
         }
         public static void Game()
         {
-            
-            
-            
-
             Console.WriteLine($"\tQuestion {question}");
             Console.WriteLine();
 
@@ -262,6 +260,7 @@ namespace MillionaireAssignment
         }
         public static void Questions()
         {
+           
             Question[] questions =
             {
         new Question
@@ -302,11 +301,32 @@ namespace MillionaireAssignment
             optionC = "C) 35",
             optionD = "D) 40",
             correctAnswer = 'B'
+        },
+         new Question
+        {
+            questionText = "What colour is an orange?",
+            optionA = "A) Orange",
+            optionB = "B) Yellow",
+            optionC = "C) Green",
+            optionD = "D) Apple",
+            correctAnswer = 'A'
         }
     };
+            if (usedQuestions.Count == questions.Length)
+            {
+                usedQuestions.Clear();
+            }
 
+            int randomIndex;
 
-            int randomIndex = rand.Next(questions.Length);
+            do
+            {
+                randomIndex = rand.Next(questions.Length);
+            }
+            while (usedQuestions.Contains(randomIndex));
+
+            usedQuestions.Add(randomIndex);
+
             Question selectedQuestion = questions[randomIndex];
 
             Console.WriteLine();
@@ -337,7 +357,7 @@ namespace MillionaireAssignment
                 Console.ResetColor();
                 if (correct >= 5)
                 {
-                    question = 0;
+                    question = 1;
                     correct = 0;
                     Win();
                 }
