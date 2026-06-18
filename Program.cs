@@ -116,38 +116,38 @@ namespace MillionaireAssignment
 
         public static void Top10()
         {
-
-
-            List<int> Pastplayers = new List<int>();
-            Random rand = new Random();
+            List<int> pastPlayers = new List<int>();
 
             for (int i = 0; i < finalist.Length; i++)
             {
-                int tempInt = 0;
-                bool newrand = true;
-                while (newrand)
+                int tempInt;
+                do
                 {
-                    tempInt = rand.Next(1, students.Length);
-                    newrand = false;
-                    for (int j = 0; j < i; j++)
-                    {
-                        if (Pastplayers[j] == tempInt)
-                        {
-                            newrand = true;
-                        }
+                    tempInt = rand.Next(0, students.Length); 
+                } while (pastPlayers.Contains(tempInt));
 
-                    }
-
-                }
-                Pastplayers.Add(tempInt);
+                pastPlayers.Add(tempInt);
                 finalist[i] = students[tempInt];
             }
 
-            for (int i = 0; i < finalist.Length; i++)
+            Array.Sort(finalist, (x, y) =>
             {
-                Console.WriteLine(finalist[i].firstName + " " + finalist[i].lastName);
+                int lastNameCompare = string.Compare(x.lastName, y.lastName);
+                if (lastNameCompare == 0)
+                {
+                    return string.Compare(x.firstName, y.firstName);
+                }
+                return lastNameCompare;
+            });
 
+            Console.WriteLine("\nFinalists:");
+            foreach (var player in finalist)
+            {
+                WriteLine($"{player.firstName} {player.lastName}");
+                Thread.Sleep(25);
             }
+            Console.WriteLine();
+            Console.WriteLine("Press Enter to Exit");
             Console.ReadLine();
             Clear();
             Main();
