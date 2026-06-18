@@ -9,8 +9,19 @@ namespace MillionaireAssignment
 {
     internal class Program
     {
-       public static Players[] students = new Players[35];
-       public static Players[] finalist = new Players[10];
+        public static Random rand = new Random();
+        public static Players[] students = new Players[35];
+        public static Players[] finalist = new Players[10];
+
+        public struct Question
+        {
+            public string questionText;
+            public string optionA;
+            public string optionB;
+            public string optionC;
+            public string optionD;
+            public char correctAnswer;
+        }
         public struct Players()
         {
             public string lastName, firstName, interest;
@@ -102,7 +113,7 @@ namespace MillionaireAssignment
         public static void Top10()
         {
 
-            
+
             List<int> Pastplayers = new List<int>();
             Random rand = new Random();
 
@@ -112,7 +123,7 @@ namespace MillionaireAssignment
                 bool newrand = true;
                 while (newrand)
                 {
-                    tempInt = rand.Next(1, 36);
+                    tempInt = rand.Next(1, students.Length);
                     newrand = false;
                     for (int j = 0; j < i; j++)
                     {
@@ -127,11 +138,11 @@ namespace MillionaireAssignment
                 Pastplayers.Add(tempInt);
                 finalist[i] = students[tempInt];
             }
+
             for (int i = 0; i < finalist.Length; i++)
             {
-                
-                    Console.WriteLine(finalist[i].firstName + " " + finalist[i].lastName);
-                
+                Console.WriteLine(finalist[i].firstName + " " + finalist[i].lastName);
+
             }
             Console.ReadLine();
             Clear();
@@ -141,7 +152,7 @@ namespace MillionaireAssignment
         {
             Players[] students = new Players[35];
             studentfile();
-           Sort();
+            Sort();
             Displayfile();
             Console.WriteLine();
             Console.WriteLine("Press Enter to Exit");
@@ -219,6 +230,7 @@ namespace MillionaireAssignment
             for (int i = 0; i < students.Length; i++)
             {
                 Console.WriteLine($"{students[i].firstName,-14} | {students[i].lastName,-14} | {students[i].interest,-14}");
+                Thread.Sleep(25);
             }
         }
         static void SaveFile(Players[] students)
@@ -233,17 +245,95 @@ namespace MillionaireAssignment
             }
             sw.Close();
         }
-            public static void Game()
+        public static void Game()
         {
-            Random random = new Random();
-
+            Random rand = new Random();
             int question = 1;
+
             Console.WriteLine($"\tQuestion {question}");
             Console.WriteLine();
+
+            Questions();
+
+            Console.ReadLine();
         }
         public static void Questions()
         {
+            Question[] questions =
+            {
+        new Question
+        {
+            questionText = "What is the capital of New Zealand?",
+            optionA = "Auckland",
+            optionB = "Christchurch",
+            optionC = "Wellington",
+            optionD = "Hamilton",
+            correctAnswer = 'C'
+        },
 
+        new Question
+        {
+            questionText = "How many continents are there?",
+            optionA = "5",
+            optionB = "6",
+            optionC = "7",
+            optionD = "8",
+            correctAnswer = 'C'
+        },
+
+        new Question
+        {
+            questionText = "Who wrote Romeo and Juliet?",
+            optionA = "Charles Dickens",
+            optionB = "William Shakespeare",
+            optionC = "Mark Twain",
+            optionD = "Jane Austen",
+            correctAnswer = 'B'
+        },
+
+        new Question
+        {
+            questionText = "What is 5 x 6?",
+            optionA = "25",
+            optionB = "30",
+            optionC = "35",
+            optionD = "40",
+            correctAnswer = 'B'
+        }
+    };
+
+
+            int randomIndex = rand.Next(questions.Length);
+            Question selectedQuestion = questions[randomIndex];
+
+            Console.WriteLine();
+            Console.WriteLine(selectedQuestion.questionText);
+            Console.WriteLine();
+            Console.WriteLine(selectedQuestion.optionA);
+            Console.WriteLine(selectedQuestion.optionB);
+            Console.WriteLine(selectedQuestion.optionC);
+            Console.WriteLine(selectedQuestion.optionD);
+            Console.WriteLine();
+            Console.Write("Final Answer (A, B, C, D): ");
+
+            char userAnswer = Char.ToUpper(Console.ReadKey().KeyChar);
+
+            Console.WriteLine();
+
+            if (userAnswer == selectedQuestion.correctAnswer)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine();
+                Console.WriteLine("Correct! You've won money!");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\tIncorrect!");
+                Console.WriteLine($"The correct answer was {selectedQuestion.correctAnswer}.");
+            }
+
+            Console.ResetColor();
         }
     }
 }
